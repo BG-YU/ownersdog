@@ -1,5 +1,4 @@
 import json
-from django.db.models.fields import EmailField
 from django.views import View
 from django.http import JsonResponse
 from .models import Owner
@@ -18,6 +17,32 @@ class OwnersListView(View):
                     'age': owner.age
                 }
             )
+
+        return JsonResponse({'result': result}, status=200)
+
+class OwnersDogList(View):
+    def get(self, request):
+        result = []
+        datas = Owner.objects.all()
+
+        for data in datas:
+            dog_list = []
+            for dog in data.dog_set.filter(owner_id=data.id):
+                dog_list.append(
+                    {
+                        'name': dog.name,
+                        'age': dog.age
+                    }
+                )
+            
+            result.append(
+                {
+                    'name': data.name,
+                    'age': data.age,
+                    'dog_list': dog_list
+                }
+            )
+            
 
         return JsonResponse({'result': result}, status=200)
 

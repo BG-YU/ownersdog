@@ -34,7 +34,7 @@ class OwnersDogList(View):
                         'age': dog.age
                     }
                 )
-            
+
             result.append(
                 {
                     'name': data.name,
@@ -43,7 +43,6 @@ class OwnersDogList(View):
                 }
             )
             
-
         return JsonResponse({'result': result}, status=200)
 
 class OwnersReg(View):
